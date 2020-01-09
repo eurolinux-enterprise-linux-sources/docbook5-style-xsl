@@ -1,6 +1,6 @@
 Name: docbook5-style-xsl
 Version: 1.78.1
-Release: 2%{?dist}
+Release: 4%{?dist}
 Group: Applications/Text
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -27,6 +27,17 @@ DocBook 5 document to other formats, such as HTML, manpages, FO,
 XHMTL and other formats. They are highly customizable. For more
 information see W3C page about XSL.
 
+%package extensions
+Group: Applications/Text
+Summary: Norman Walsh's XSL stylesheets extensions for DocBook 5.X
+# Package is licensed as MIT/X (http://wiki.docbook.org/topic/DocBookLicense),
+# some .js files under ./slides/browser/ are licensed MPLv1.1
+License: MIT and ASL 2.0
+Requires: docbook-xsl-ns = %{version}
+
+%description extensions
+This package contains Java extensions for XSL namespace aware stylesheets.
+
 %prep
 %setup -q -n docbook-xsl-ns-%{version}
 #remove .gitignore files
@@ -46,8 +57,6 @@ $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION
 ln -s xsl-ns-stylesheets-%{version} \
  $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets
 
-# Don't ship the extensions.
-rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/extensions
 # Don't ship install shell script.
 rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 
@@ -59,6 +68,11 @@ rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 %doc RELEASE-NOTES.*
 %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}
 %{_datadir}/sgml/docbook/xsl-ns-stylesheets
+%exclude %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
+
+%files extensions
+%doc extensions/README.txt extensions/LICENSE.txt
+%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
 
 %post
 CATALOG=%{_sysconfdir}/xml/catalog
@@ -85,6 +99,12 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Wed Jul 16 2014 Ondrej Vasik <ovasik@redhat.com> 1.78.1-4
+- fix the extensions inclusion
+
+* Wed Jul 16 2014 Ondrej Vasik <ovasik@redhat.com> 1.78.1-3
+- include extensions in extensions subpackage (#1084491)
+
 * Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.78.1-2
 - Mass rebuild 2013-12-27
 
