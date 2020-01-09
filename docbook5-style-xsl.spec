@@ -1,6 +1,6 @@
 Name: docbook5-style-xsl
 Version: 1.78.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Applications/Text
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -85,6 +85,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.78.1-2
+- Mass rebuild 2013-12-27
+
 * Mon Mar 18 2013 Ondrej Vasik <ovasik@redhat.com> 1.78.1-1
 - new upstream release 1.78.1
 
